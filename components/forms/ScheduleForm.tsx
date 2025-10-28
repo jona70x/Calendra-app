@@ -27,6 +27,7 @@ import { Button } from "../ui/button";
 import { Plus, X } from "lucide-react";
 import { Input } from "../ui/input";
 import { toast } from "sonner";
+import { saveSchedule } from "@/server/actions/schedule";
 // import { saveSchedule } from "@/server/actions/schedule";
 
 // Type declaration for availability
@@ -62,7 +63,6 @@ export function ScheduleForm({
     remove: removeAvailability, // Removes availability entry
     fields: availabilityFields, // Current availability fields
   } = useFieldArray({ name: "availabilities", control: form.control });
-
 
   const groupedAvailabilityFields = Object.groupBy(
     availabilityFields.map((field, index) => ({ ...field, index })),

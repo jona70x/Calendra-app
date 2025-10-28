@@ -123,5 +123,23 @@ export async function getEvent(
       and(eq(clerkUserId, userId), eq(id, eventId)), // Making sure the event belongs to the user
   });
 
-  return event ?? undefined; 
+  return event ?? undefined;
+}
+
+// Define a new type for public events, which are always active
+export type PublicEvent = Omit<EventRow, "isActive"> & { isActive: true };
+
+// function to fetch all active events for a specific user
+export async function getPublicEvents(
+  clerkUserId: string
+): Promise<PublicEvent[]> {
+  // Events are ordered alphabetically (case-insensitive) by name
+  const events = await db.query.EventTable.findMany({
+    where: ({ clerkUserId: userIdCol, isActive }, { eq, and }) =>
+      and(eq(userIdCol, clerkUserId), eq(isActive, true)),
+    orderBy: ({ name }, { asc, sql }) => asc(sql`lower(${name})`),
+  });
+
+  // Cast the result to the PublicEvent[] type to indicate all are active
+  return events as PublicEvent[];
 }

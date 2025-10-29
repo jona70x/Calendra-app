@@ -27,7 +27,7 @@ export default async function BookingPage({
 
   // fething the event details from the database using the provided user and event IDs
   const event = await getEvent(clerkUserId, eventId);
-  
+
   if (!event)
     return (
       <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-md flex items-center gap-2 text-sm max-w-md mx-auto mt-6">

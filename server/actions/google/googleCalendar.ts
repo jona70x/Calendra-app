@@ -94,7 +94,7 @@ export async function getCalendarEventTimes(
     throw new Error(`Failed to fetch calendar events: ${err.message || err}`);
   }
 }
-
+// returns google calendar event
 export async function createCalendarEvent({
   clerkUserId,
   guestName,

@@ -1,3 +1,4 @@
+import PublicProfile from "@/components/PublicProfile";
 import { clerkClient } from "@clerk/nextjs/server";
 
 export default async function PublicProfilePage({

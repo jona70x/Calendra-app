@@ -7,6 +7,7 @@ import { useUser } from "@clerk/nextjs";
 import { Copy, Eye } from "lucide-react";
 import { Button } from "./ui/button";
 import { toast } from "sonner";
+import PublicEventCard from "./PublicEventCard";
 
 type PublicProfileProps = {
   userId: string;
@@ -17,7 +18,7 @@ export default function PublicProfile({
   userId,
   fullName,
 }: PublicProfileProps) {
-  const [events, setEvents] = useState<PublicEvent[] | null>();
+  const [events, setEvents] = useState<PublicEvent[] | null>(null);
   const { user } = useUser();
 
   // function to copy profile url
@@ -77,6 +78,25 @@ export default function PublicProfile({
             <Copy className="size-4" />
             Copy Public Profile URL
           </Button>
+        </div>
+      )}
+      {/* public message */}
+      <div className="text-muted-foreground mb-6 max-w-sm mx-auto text-center">
+        <p className="font-bold text-2xl">Time to meet!🧑‍🤝‍🧑</p>
+        <br /> Pick an event and let’s make it official by booking a time.
+      </div>
+
+      {/* grid of public event cards */}
+      {events.length === 0 ? (
+        <div className="text-center text-muted-foreground">
+          No events available at the moment.
+        </div>
+      ) : (
+        <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
+          {events.map((event) => (
+            // Render a card for each event
+            <PublicEventCard key={event.id} {...event} />
+          ))}
         </div>
       )}
     </div>
